@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BFHL Hierarchy Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <h1>Inspect node lists and render tree hierarchies instantly.</h1>
+        <p>
+          Paste a JSON array of edges like <span>A-&gt;B</span>, submit it to <code>/bfhl</code>, and review
+          the parsed trees, cycle groups, invalid entries, and duplicate edges in one view.
+        </p>
+        <div class="hero-meta">
+          <span>POST /bfhl</span>
+          <span>Node.js</span>
+          <span>Same-origin frontend</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="panel input-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Input</h2>
+              <p>Enter the node list as JSON. The UI sends it directly to the hosted API.</p>
+            </div>
+            <button id="submitBtn" class="primary-button">Submit</button>
+          </div>
+
+          <label class="field-label" for="dataInput">Request body</label>
+          <textarea id="dataInput" spellcheck="false">{
+  "data": [
+    "A->B",
+    "A->C",
+    "B->D",
+    "C->E",
+    "E->F",
+    "X->Y",
+    "Y->Z",
+    "Z->X",
+    "P->Q",
+    "Q->R",
+    "G->H",
+    "G->H",
+    "G->I",
+    "hello",
+    "1->2",
+    "A->"
+  ]
+}</textarea>
+
+          <div id="errorBox" class="error-box hidden"></div>
+        </div>
+
+        <div class="panel output-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Response</h2>
+              <p>Tree view, summary cards, and validation results from the API.</p>
+            </div>
+            <span id="statusBadge" class="status-badge">Idle</span>
+          </div>
+
+          <div id="responseRoot" class="response-root">
+            <div class="empty-state">
+              Submit a request to see the parsed hierarchies.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template id="treeNodeTemplate">
+      <li class="tree-node">
+        <div class="tree-label"></div>
+        <ul class="tree-children"></ul>
+      </li>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
